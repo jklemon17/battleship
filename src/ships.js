@@ -1,5 +1,4 @@
 const shipFactory = (start, end) => {
-  // let length = Math.abs((start.x - end.x) + (start.y - end.y)) + 1;
   let spots = [];
 
   if (start.y == end.y) {
@@ -12,15 +11,23 @@ const shipFactory = (start, end) => {
     }
   }
 
-  let sunk = false;
+  // let sunk = false;
 
-  let checkHit = function(target) {
-    // this function only gets called if target hit this ship
-    // compare target.x and target.y  to spots
-    // check for spot already hit?  toggle if not
-    // check is all spots hit?  if yes toggle sunk
+  const applyHit = target => {
+    let index = spots.indexOf(spots.find((spot) => spot.x == target.x && spot.y == target.y))
+    spots[index].hit = true;
   }
-  return {start, end, spots, sunk, checkHit};
+
+  const isSunk = () => {
+    if (spots.every(spot => spot.hit == true)) {
+      console.log('sunk');
+      // sunk = true;
+      return true;
+    }
+    return false;
+  }
+
+  return { start, end, spots, applyHit, isSunk };
 };
 
 export { shipFactory }
@@ -37,7 +44,7 @@ export { shipFactory }
 //            { x: 1, y: 0, hit: false },
 //            { x: 2, y: 0, hit: false }],
 //   sunk: false,
-//   hit = function() {
+//   applyHit = function() {
 //
 //   }
 // }
