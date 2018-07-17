@@ -11,16 +11,16 @@ const shipFactory = (start, end) => {
       spots.push({x: start.x, y: i, hit: false})
     }
   }
-  
+
   let sunk = false;
 
-  let hit = function(target) {
+  let checkHit = function(target) {
     // this function only gets called if target hit this ship
     // compare target.x and target.y  to spots
     // check for spot already hit?  toggle if not
     // check is all spots hit?  if yes toggle sunk
   }
-  return {start, end, spots, sunk, hit};
+  return {start, end, spots, sunk, checkHit};
 };
 
 export { shipFactory }
