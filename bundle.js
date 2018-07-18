@@ -86,6 +86,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/DOM.js":
+/*!********************!*\
+  !*** ./src/DOM.js ***!
+  \********************/
+/*! exports provided: buildBoard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"buildBoard\", function() { return buildBoard; });\n/* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gameboard */ \"./src/gameboard.js\");\n\n\nfunction buildBoard() {\n  let gameBoard = new _gameboard__WEBPACK_IMPORTED_MODULE_0__[\"Gameboard\"]()\n  // gameBoard.board.forEach(\n  //\n  // )\n  for (let x=0; x<10; x++) {\n    for (let y=0; y<10; y++) {\n      let square = document.createElement('div');\n      square.addEventListener('click', gameBoard.receiveAttack);\n      square.classList = 'square';\n      if (y == 0) {\n        square.classList.toggle('last');\n      }\n      square.x = x;\n      square.y = y;\n      document.body.appendChild(square);\n    }\n  }\n}\n\n\n\n\n//# sourceURL=webpack:///./src/DOM.js?");
+
+/***/ }),
+
 /***/ "./src/gameboard.js":
 /*!**************************!*\
   !*** ./src/gameboard.js ***!
@@ -94,7 +106,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Gameboard\", function() { return Gameboard; });\nclass Gameboard {\n  constructor() {\n    this.board = [];\n    for (let i = 0; i < 10; i++) {\n      this.board.push(new Array(10).fill(0));\n    }\n    console.log(this.board)\n  }\n}\n\n\n\n\n//# sourceURL=webpack:///./src/gameboard.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Gameboard\", function() { return Gameboard; });\n/* harmony import */ var _shipClass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shipClass */ \"./src/shipClass.js\");\n\n\nclass Gameboard {\n  constructor() {\n    this.board = [];\n    for (let i = 0; i < 10; i++) {\n      this.board.push(new Array(10).fill(0));\n    }\n    this.ships = [\n      new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship1\", {x: 0, y: 0}, {x: 0, y: 4}),\n      new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship2\", {x: 1, y: 0}, {x: 1, y: 3}),\n      new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship3\", {x: 2, y: 0}, {x: 2, y: 2}),\n      new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship4\", {x: 3, y: 0}, {x: 3, y: 2}),\n      new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship5\", {x: 4, y: 0}, {x: 4, y: 1})\n    ];\n  }\n  receiveAttack(event) {\n    let boardTarget = this.board[event.target.x][event.target.y];\n    this.ships.forEach(ship => ship.spots.forEach(spot => {\n        if (spot.x == event.target.x && spot.y == event.target.y) {\n            spot.applyHit({x: event.target.x, y: event.target.y});\n            boardTarget = 1;\n            event.target.classList += 'red';\n        }}\n      )\n    )\n    if (boardTarget != 1) {\n      boardTarget = 2;\n      event.target.classList += 'white';\n    }\n  }\n}\n\n\n\n\n//# sourceURL=webpack:///./src/gameboard.js?");
 
 /***/ }),
 
@@ -106,7 +118,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _shipClass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shipClass */ \"./src/shipClass.js\");\n/* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gameboard */ \"./src/gameboard.js\");\n\n\n\n\"use strict\";\n\nlet board = new _gameboard__WEBPACK_IMPORTED_MODULE_1__[\"Gameboard\"]();\n\nlet sunkenShips = 0;\nconsole.log(sunkenShips);\n\nlet ship1 = new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship1\", {x: 0, y: 0}, {x: 0, y: 4});\nlet ship2 = new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship2\", {x: 1, y: 0}, {x: 1, y: 3});\nlet ship3 = new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship3\", {x: 2, y: 0}, {x: 2, y: 2});\nlet ship4 = new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship4\", {x: 3, y: 0}, {x: 3, y: 2});\nlet ship5 = new _shipClass__WEBPACK_IMPORTED_MODULE_0__[\"Ship\"](\"ship5\", {x: 4, y: 0}, {x: 4, y: 1});\n\n\nconsole.log(ship1);\nship1.applyHit({x:0, y:0});\nship1.applyHit({x:0, y:1});\nship1.applyHit({x:0, y:2});\nship1.applyHit({x:0, y:3});\nconsole.log(ship1);\nship1.applyHit({x:0, y:4});\nconsole.log(ship1);\n\nif (ship1.sunk) {\n  sunkenShips++;\n}\n\n\nconsole.log(sunkenShips);\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _DOM__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DOM */ \"./src/DOM.js\");\n\n// import { Ship } from './shipClass';\n// import { Gameboard } from './gameboard';\n\n\"use strict\";\n\nObject(_DOM__WEBPACK_IMPORTED_MODULE_0__[\"buildBoard\"])();\n// let board = new Gameboard();\n//\n// let sunkenShips = 0;\n// console.log(sunkenShips);\n//\n// let ship1 = new Ship(\"ship1\", {x: 0, y: 0}, {x: 0, y: 4});\n// let ship2 = new Ship(\"ship2\", {x: 1, y: 0}, {x: 1, y: 3});\n// let ship3 = new Ship(\"ship3\", {x: 2, y: 0}, {x: 2, y: 2});\n// let ship4 = new Ship(\"ship4\", {x: 3, y: 0}, {x: 3, y: 2});\n// let ship5 = new Ship(\"ship5\", {x: 4, y: 0}, {x: 4, y: 1});\n//\n//\n// console.log(ship1);\n// ship1.applyHit({x:0, y:0});\n// ship1.applyHit({x:0, y:1});\n// ship1.applyHit({x:0, y:2});\n// ship1.applyHit({x:0, y:3});\n// console.log(ship1);\n// ship1.applyHit({x:0, y:4});\n// console.log(ship1);\n//\n// if (ship1.sunk) {\n//   sunkenShips++;\n// }\n//\n//\n// console.log(sunkenShips);\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
