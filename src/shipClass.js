@@ -1,18 +1,3 @@
-// class Rabbit {
-//   constructor(type) {
-//     this.type = type;
-//   }
-//   speak(line) {
-//     console.log(`The ${this.type} rabbit says '${line}'`);
-//   }
-// }
-//
-// let killerRabbit = new Rabbit("killer");
-// let blackRabbit = new Rabbit("black");
-
-
-import { sunkenShips } from "./index";
-
 class Ship {
   constructor(name, start, end) {
     this.name = name;
@@ -38,43 +23,5 @@ class Ship {
     }
   }
 }
-
-// let ship1 = new Ship({x: 0, y: 0}, {x: 0, y: 4});
-// let ship2 = new Ship({x: 1, y: 0}, {x: 1, y: 3});
-
-
-
-
-// const shipFactory = (start, end) => {
-//   let spots = [];
-//
-//   if (start.y == end.y) {
-//     for (let i = start.x; i <= end.x; i++) {
-//       spots.push({x: i, y: start.y, hit: false});
-//     }
-//   } else {
-//     for (let i = start.y; i <= end.y; i++) {
-//       spots.push({x: start.x, y: i, hit: false})
-//     }
-//   }
-
-//  // let sunk = false;
-
-  // const applyHit = target => {
-  //   let index = spots.indexOf(spots.find((spot) => spot.x == target.x && spot.y == target.y))
-  //   spots[index].hit = true;
-  // }
-
-//   const isSunk = () => {
-//     if (spots.every(spot => spot.hit == true)) {
-//       console.log('sunk');
-//       // sunk = true;
-//       return true;
-//     }
-//     return false;
-//   }
-//
-//   return { start, end, spots, applyHit, isSunk };
-// };
 
 export { Ship }

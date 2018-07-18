@@ -1,4 +1,3 @@
-// import { shipFactory } from './ships';
 import { Ship } from './shipClass';
 
 "use strict";
