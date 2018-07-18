@@ -1,6 +1,9 @@
 import { Ship } from './shipClass';
+import { Gameboard } from './gameboard';
 
 "use strict";
+
+let board = new Gameboard();
 
 let sunkenShips = 0;
 console.log(sunkenShips);
