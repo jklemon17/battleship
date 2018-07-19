@@ -28,9 +28,9 @@ class Gameboard {
         let randomDir = Math.random() < 0.5 ? "H" : "V";
         let ship;
         if (randomDir == "V") {
-          ship = new Ship("ship1", {x: randomX, y: randomY}, {x: randomX, y: randomY+length});
+          ship = new Ship(`ship${length+1}`, {x: randomX, y: randomY}, {x: randomX, y: randomY+length});
         } else {
-          ship = new Ship("ship1", {x: randomX, y: randomY}, {x: randomX+length, y: randomY});
+          ship = new Ship(`ship${length+1}`, {x: randomX, y: randomY}, {x: randomX+length, y: randomY});
         }
         // check if spots have already been taken:
         let spotisValid = true
@@ -51,7 +51,7 @@ class Gameboard {
     }
 
     // NOTE ship lengths of 5,4,4,3,1  need to be -1
-    let stockShips = [4,3,3,2,1];
+    let stockShips = [4,3,2,1,0];
     stockShips.forEach(length => {
       let happened;
       do {
@@ -74,6 +74,11 @@ class Gameboard {
   }
 
   playerAttack(event) {
+    // let squares = document.getElementsByClassName('square');
+    // let gameOverDiv = document.getElementById('game-over');
+    // gameOverDiv.innerHTML = 'Computer Firing...';
+    // let board = document.getElementsByClassName('board')[0];
+    // board.style.pointerEvents = 'none';
     let boardTarget = this.gameboard.board[this.x][this.y];
     this.gameboard.ships.forEach(ship => ship.spots.forEach(spot => {
         if (spot.x == this.x && spot.y == this.y) {
@@ -83,7 +88,8 @@ class Gameboard {
             if (ship.sunk) {
               this.gameboard.sunkenShips++;
               if (this.gameboard.sunkenShips >= 5) {
-                console.log("Game over!");
+                // let gameOverDiv = document.getElementById('game-over')
+                gameOverDiv.innerHTML = 'You Win!';
               }
             }
         }}
@@ -100,7 +106,6 @@ class Gameboard {
     this.removeEventListener('click', this.enemyboard.computerAttack);
 
         let computerShot;
-
         if (this.enemyboard.lastShotSucceeded) {
           computerShot = generateEducatedCoords(this.enemyboard.lastShotXY);
           while (this.enemyboard.board[computerShot.x][computerShot.y] == 2) {
@@ -114,6 +119,7 @@ class Gameboard {
         }
 
         let computerTarget = document.getElementById(`X${computerShot.x}-Y${computerShot.y}`);
+        let gameOverDiv = document.getElementById('game-over');
 
         if (this.enemyboard.board[computerShot.x][computerShot.y] == 1) {
           computerTarget.classList.toggle('red');
@@ -121,20 +127,42 @@ class Gameboard {
           this.enemyboard.lastShotXY = { x: computerShot.x, y: computerShot.y };
 
           // apply hit to Player's javascript Ship object:
-          this.enemyboard.ships.forEach(ship => ship.spots.forEach(spot => {
-              if (spot.x == computerShot.x && spot.y == computerShot.y) {
-                  ship.applyHit({x: computerShot.x, y: computerShot.y});
-                  if (ship.sunk) {
-                    console.log("PC sunk your ship!");
-                    console.log(ship);
-                    this.enemyboard.sunkenShips++;
-                    if (this.enemyboard.sunkenShips >= 5) {
-                      console.log("Game over!");
+          // loop1:
+            for (let ship of this.enemyboard.ships) {
+              console.log(`Checking ship: ${ship.name}`);
+              for (let spot of ship.spots) {
+                if (spot.x == computerShot.x && spot.y == computerShot.y) {
+                    ship.applyHit({x: computerShot.x, y: computerShot.y});
+                    if (ship.sunk) {
+                      this.enemyboard.sunkenShips++;
+                      console.log("PC sunk your ship!");
+                      if (this.enemyboard.sunkenShips >= 5) {
+                        console.log(this.enemyboard.sunkenShips);
+                        // let gameOverDiv = document.getElementById('game-over')
+                        gameOverDiv.innerHTML = 'You Lose!';
+                      }
                     }
-                  }
-              }}
-            )
-          )
+                    // break loop1;//STOP this loop
+                }
+              }
+            }
+          // this.enemyboard.ships.forEach(ship => ship.spots.forEach(spot => {
+          //     if (spot.x == computerShot.x && spot.y == computerShot.y) {
+          //         ship.applyHit({x: computerShot.x, y: computerShot.y});
+          //         if (ship.sunk) {
+          //           this.enemyboard.sunkenShips++;
+          //           console.log("PC sunk your ship!");
+          //           console.log(ship);
+          //           if (this.enemyboard.sunkenShips >= 5) {
+          //             console.log(this.enemyboard.sunkenShips);
+          //             // let gameOverDiv = document.getElementById('game-over')
+          //             gameOverDiv.innerHTML = 'You Lose!';
+          //           }
+          //         }
+          //         break;//STOP this loop
+          //     }}
+          //   )
+          // )
 
 
         } else {
@@ -142,6 +170,10 @@ class Gameboard {
           this.enemyboard.lastShotSucceeded = false;
         }
         this.enemyboard.board[computerShot.x][computerShot.y] = 2;
+        // gameOverDiv.innerHTML = 'Take your shot!';
+        // let board = document.getElementsByClassName('board')[0];
+        // board.style.pointerEvents = 'all'
+
   }
 
 

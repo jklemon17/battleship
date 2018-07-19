@@ -46,6 +46,10 @@ function initialSetup() {
   let PlayerTerritory = new Gameboard()
   // Computer's perspective:
   buildBoard(NPCterritory, PlayerTerritory);
+
+  let gameOverDiv = document.createElement('div');
+  gameOverDiv.id = 'game-over';
+  document.body.appendChild(gameOverDiv);
   // Player's perspective:
   buildBoard(PlayerTerritory);
   // buildBoard('NPC');

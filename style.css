@@ -36,3 +36,12 @@
   clear: both;
   margin: 40px 35% 20px;
 }
+
+#game-over {
+  display: inline-block;
+  width: 100vw;
+  float: left;
+  clear: both;
+  /* margin: 0 35%; */
+  text-align: center;
+}
