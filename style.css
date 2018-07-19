@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.square {
+  height: 25px;
+  width: 25px;
+  background-color: aqua;
+  border: 1px solid black;
+  display: inline-block;
+  float: left;
+}
+
+.last {
+  /* float: left; */
+  clear: left;
+}
+
+.red {
+  background-color: red;
+}
+
+.white {
+  background-color: white;
+}
