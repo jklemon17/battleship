@@ -68,12 +68,9 @@ class Gameboard {
     console.log(count);
 
 
-      //
-      // new Ship("ship1", {x: 0, y: 0}, {x: 0, y: 4}),
-      // new Ship("ship2", {x: 1, y: 0}, {x: 1, y: 3}),
-      // new Ship("ship3", {x: 2, y: 0}, {x: 2, y: 2}),
-      // new Ship("ship4", {x: 3, y: 0}, {x: 3, y: 2}),
-      // new Ship("ship5", {x: 4, y: 0}, {x: 4, y: 1})
+    this.lastShotSucceeded = false;
+    this.lastShotXY = null;
+
   }
 
   playerAttack(event) {
@@ -81,7 +78,7 @@ class Gameboard {
     this.gameboard.ships.forEach(ship => ship.spots.forEach(spot => {
         if (spot.x == this.x && spot.y == this.y) {
             ship.applyHit({x: this.x, y: this.y});
-            boardTarget = 1;
+            // boardTarget = 2;
             this.classList.toggle('red');
             if (ship.sunk) {
               this.gameboard.sunkenShips++;
@@ -96,15 +93,108 @@ class Gameboard {
       boardTarget = 2;
       this.classList.toggle('white');
     }
-    this.removeEventListener('click', this.gameboard.receiveAttack);
+    this.removeEventListener('click', this.gameboard.playerAttack);
   }
 
   computerAttack() {
-    coords = generateRandomCoords()
+    this.removeEventListener('click', this.enemyboard.computerAttack);
+
+        let computerShot;
+
+        if (this.enemyboard.lastShotSucceeded == true) {
+          computerShot = generateEducatedCoords();
+          while (this.enemyboard.board[computerShot.x][computerShot.y] == 2) {
+            computerShot = generateEducatedCoords();
+          }
+        } else {
+          computerShot = generateRandomCoords();
+          while (this.enemyboard.board[computerShot.x][computerShot.y] == 2) {
+            computerShot = generateRandomCoords();
+          }
+        }
+
+
+
+        let computerTarget = document.getElementById(`X${computerShot.x}-Y${computerShot.y}`);
+
+        if (this.enemyboard.board[computerShot.x][computerShot.y] == 1) {
+          computerTarget.classList.toggle('red');
+          this.enemyboard.lastShotSucceeded = true;
+          this.enemyboard.lastShotXY = { x: computerShot.x, y: computerShot.y };
+
+          console.log(this.enemyboard.lastShotXY);
+
+          // apply hit to Player's javascript Ship object:
+          this.enemyboard.ships.forEach(ship => ship.spots.forEach(spot => {
+              if (spot.x == computerShot.x && spot.y == computerShot.y) {
+                  ship.applyHit({x: computerShot.x, y: computerShot.y});
+                  if (ship.sunk) {
+                    console.log("PC sunk your ship!");
+                    console.log(ship);
+                    this.enemyboard.sunkenShips++;
+                    if (this.enemyboard.sunkenShips >= 5) {
+                      console.log("Game over!");
+                    }
+                  }
+              }}
+            )
+          )
+
+
+        } else {
+          computerTarget.classList.toggle('white');
+          this.enemyboard.lastShotSucceeded = true;
+        }
+        this.enemyboard.board[computerShot.x][computerShot.y] = 2;
+
+
+
   }
-  generateRandomCoords() {
-    
-  }
+
+
+    // CPU AI LOGIC:
+
+    // generate new shot with random coordinates,
+    // check if that location has already been targeted "state = 2",
+    // if yes, generate new one until it is one that is not "state = 2",
+    //
+    // if successful hit, then next generated shot will educatedCoordinate instead of random,
+    // it will +1 or -1 x or y from last successful hit.
+    // if that location is not state = "2"
+    // if 4 calls to educatedCoordinate occur that are invalid, switch back to random.
+    //
+    // keep track of num shots since last hit.
+    // keep track of num shots that are hits since last hit
+    //
+    // if go 4 shots without hit, then go back to generating random location,
+    // or if go 5 hits in 15 shots (sunk largest ship), then go back to generating random location.  The two variables above get reset.
+    //
+    // if hits are in a straight line?  follow line?
+
 }
+
+
+function generateRandomCoords() {
+  let randomCoords = { x: -5, y: -5 }
+
+  while (randomCoords.x < 0 || randomCoords.x > 9 || randomCoords.y < 0 || randomCoords.y > 9) {
+    randomCoords.x = Math.floor(Math.random() * 10);
+    randomCoords.y = Math.floor(Math.random() * 10);
+  }
+
+  return randomCoords;
+}
+
+function generateEducatedCoords(lastshot) {
+  let educatedCoords;
+
+  while (educatedCoords.x < 0 || educatedCoords.x > 9 || educatedCoords.y < 0 || educatedCoords.y > 9) {
+    educatedCoords.x = Math.floor(Math.random() * 10);
+    educatedCoords.y = Math.floor(Math.random() * 10);
+  }
+
+  return educatedCoords;
+}
+
 
 export { Gameboard };

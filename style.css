@@ -17,9 +17,6 @@
   clear: left;
 }
 
-.red {
-  background-color: red;
-}
 
 .white {
   background-color: white;
@@ -27,6 +24,10 @@
 
 .player-ship {
   background-color: darkgrey;
+}
+
+.red {
+  background-color: red;
 }
 
 .board {
