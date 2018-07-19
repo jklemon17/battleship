@@ -101,10 +101,10 @@ class Gameboard {
 
         let computerShot;
 
-        if (this.enemyboard.lastShotSucceeded == true) {
-          computerShot = generateEducatedCoords();
+        if (this.enemyboard.lastShotSucceeded) {
+          computerShot = generateEducatedCoords(this.enemyboard.lastShotXY);
           while (this.enemyboard.board[computerShot.x][computerShot.y] == 2) {
-            computerShot = generateEducatedCoords();
+            computerShot = generateEducatedCoords(this.enemyboard.lastShotXY);
           }
         } else {
           computerShot = generateRandomCoords();
@@ -113,16 +113,12 @@ class Gameboard {
           }
         }
 
-
-
         let computerTarget = document.getElementById(`X${computerShot.x}-Y${computerShot.y}`);
 
         if (this.enemyboard.board[computerShot.x][computerShot.y] == 1) {
           computerTarget.classList.toggle('red');
           this.enemyboard.lastShotSucceeded = true;
           this.enemyboard.lastShotXY = { x: computerShot.x, y: computerShot.y };
-
-          console.log(this.enemyboard.lastShotXY);
 
           // apply hit to Player's javascript Ship object:
           this.enemyboard.ships.forEach(ship => ship.spots.forEach(spot => {
@@ -143,12 +139,9 @@ class Gameboard {
 
         } else {
           computerTarget.classList.toggle('white');
-          this.enemyboard.lastShotSucceeded = true;
+          this.enemyboard.lastShotSucceeded = false;
         }
         this.enemyboard.board[computerShot.x][computerShot.y] = 2;
-
-
-
   }
 
 
@@ -186,11 +179,27 @@ function generateRandomCoords() {
 }
 
 function generateEducatedCoords(lastshot) {
-  let educatedCoords;
+  let educatedCoords = {x:-5, y:-5};
 
   while (educatedCoords.x < 0 || educatedCoords.x > 9 || educatedCoords.y < 0 || educatedCoords.y > 9) {
-    educatedCoords.x = Math.floor(Math.random() * 10);
-    educatedCoords.y = Math.floor(Math.random() * 10);
+    switch(Math.floor(Math.random() * 4)){
+      case 0:
+        educatedCoords.x = lastshot.x + 1
+        educatedCoords.y = lastshot.y
+        break;
+      case 1:
+        educatedCoords.x = lastshot.x - 1
+        educatedCoords.y = lastshot.y
+        break;
+      case 2:
+        educatedCoords.x = lastshot.x
+        educatedCoords.y = lastshot.y + 1
+        break;
+      case 3:
+        educatedCoords.x = lastshot.x
+        educatedCoords.y = lastshot.y - 1
+        break;
+    };
   }
 
   return educatedCoords;
