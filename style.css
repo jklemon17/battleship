@@ -12,7 +12,7 @@
   float: left;
 }
 
-.last {
+.first {
   /* float: left; */
   clear: left;
 }
@@ -23,4 +23,15 @@
 
 .white {
   background-color: white;
+}
+
+.player-ship {
+  background-color: darkgrey;
+}
+
+.board {
+  display: inline-block;
+  float: left;
+  clear: both;
+  margin: 40px 35% 20px;
 }

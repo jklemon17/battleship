@@ -75,7 +75,8 @@ class Gameboard {
       // new Ship("ship4", {x: 3, y: 0}, {x: 3, y: 2}),
       // new Ship("ship5", {x: 4, y: 0}, {x: 4, y: 1})
   }
-  receiveAttack(event) {
+
+  playerAttack(event) {
     let boardTarget = this.gameboard.board[this.x][this.y];
     this.gameboard.ships.forEach(ship => ship.spots.forEach(spot => {
         if (spot.x == this.x && spot.y == this.y) {
@@ -96,6 +97,13 @@ class Gameboard {
       this.classList.toggle('white');
     }
     this.removeEventListener('click', this.gameboard.receiveAttack);
+  }
+
+  computerAttack() {
+    coords = generateRandomCoords()
+  }
+  generateRandomCoords() {
+    
   }
 }
 

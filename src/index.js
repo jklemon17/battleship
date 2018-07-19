@@ -1,10 +1,10 @@
-import { buildBoard } from './DOM';
+import { initialSetup } from './DOM';
 // import { Ship } from './shipClass';
 // import { Gameboard } from './gameboard';
 
 "use strict";
 
-buildBoard();
+initialSetup();
 // let board = new Gameboard();
 //
 // let sunkenShips = 0;
