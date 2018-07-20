@@ -74,27 +74,46 @@ class Gameboard {
   }
 
   playerAttack(event) {
-    // let squares = document.getElementsByClassName('square');
     // let gameOverDiv = document.getElementById('game-over');
     // gameOverDiv.innerHTML = 'Computer Firing...';
-    // let board = document.getElementsByClassName('board')[0];
-    // board.style.pointerEvents = 'none';
     let boardTarget = this.gameboard.board[this.x][this.y];
-    this.gameboard.ships.forEach(ship => ship.spots.forEach(spot => {
-        if (spot.x == this.x && spot.y == this.y) {
-            ship.applyHit({x: this.x, y: this.y});
-            // boardTarget = 2;
-            this.classList.toggle('red');
-            if (ship.sunk) {
-              this.gameboard.sunkenShips++;
-              if (this.gameboard.sunkenShips >= 5) {
-                // let gameOverDiv = document.getElementById('game-over')
-                gameOverDiv.innerHTML = 'You Win!';
+    let gameOverDiv = document.getElementById('game-over');
+    let board = document.getElementsByClassName('board')[0];
+
+    loop1:
+      for (let ship of this.gameboard.ships) {
+        for (let spot of ship.spots) {
+          if (spot.x == this.x && spot.y == this.y) {
+              ship.applyHit({x: this.x, y: this.y});
+              this.classList.toggle('red');
+              if (ship.sunk) {
+                this.gameboard.sunkenShips++;
+                gameOverDiv.innerHTML = 'You sunk their ship!';
+                if (this.gameboard.sunkenShips >= 5) {
+                  board.style.pointerEvents = 'none';
+                  gameOverDiv.innerHTML = 'You Win!';
+                }
               }
-            }
-        }}
-      )
-    )
+              break loop1;//STOP this loop
+          }
+        }
+      }
+
+    // this.gameboard.ships.forEach(ship => ship.spots.forEach(spot => {
+    //     if (spot.x == this.x && spot.y == this.y) {
+    //         ship.applyHit({x: this.x, y: this.y});
+    //         // boardTarget = 2;
+    //         this.classList.toggle('red');
+    //         if (ship.sunk) {
+    //           this.gameboard.sunkenShips++;
+    //           if (this.gameboard.sunkenShips >= 5) {
+    //             let gameOverDiv = document.getElementById('game-over');
+    //             gameOverDiv.innerHTML = 'You Win!';
+    //           }
+    //         }
+    //     }}
+    //   )
+    // )
     if (boardTarget != 1) {
       boardTarget = 2;
       this.classList.toggle('white');
@@ -104,22 +123,18 @@ class Gameboard {
 
   computerAttack() {
     this.removeEventListener('click', this.enemyboard.computerAttack);
+    let board = document.getElementsByClassName('board')[0];
 
         let computerShot;
+        let gameOverDiv = document.getElementById('game-over');
+
         if (this.enemyboard.lastShotSucceeded) {
-          computerShot = generateEducatedCoords(this.enemyboard.lastShotXY);
-          while (this.enemyboard.board[computerShot.x][computerShot.y] == 2) {
-            computerShot = generateEducatedCoords(this.enemyboard.lastShotXY);
-          }
+          computerShot = this.enemyboard.educatedShot(this);
         } else {
-          computerShot = generateRandomCoords();
-          while (this.enemyboard.board[computerShot.x][computerShot.y] == 2) {
-            computerShot = generateRandomCoords();
-          }
+          computerShot = this.enemyboard.randomShot(this);
         }
 
         let computerTarget = document.getElementById(`X${computerShot.x}-Y${computerShot.y}`);
-        let gameOverDiv = document.getElementById('game-over');
 
         if (this.enemyboard.board[computerShot.x][computerShot.y] == 1) {
           computerTarget.classList.toggle('red');
@@ -127,56 +142,54 @@ class Gameboard {
           this.enemyboard.lastShotXY = { x: computerShot.x, y: computerShot.y };
 
           // apply hit to Player's javascript Ship object:
-          // loop1:
+          loop1:
             for (let ship of this.enemyboard.ships) {
-              console.log(`Checking ship: ${ship.name}`);
               for (let spot of ship.spots) {
                 if (spot.x == computerShot.x && spot.y == computerShot.y) {
                     ship.applyHit({x: computerShot.x, y: computerShot.y});
                     if (ship.sunk) {
                       this.enemyboard.sunkenShips++;
-                      console.log("PC sunk your ship!");
+                      gameOverDiv.innerHTML = 'PC sunk your ship!';
                       if (this.enemyboard.sunkenShips >= 5) {
-                        console.log(this.enemyboard.sunkenShips);
                         // let gameOverDiv = document.getElementById('game-over')
                         gameOverDiv.innerHTML = 'You Lose!';
+                        board.style.pointerEvents = 'none';
                       }
                     }
-                    // break loop1;//STOP this loop
+                    break loop1;//STOP this loop
                 }
               }
             }
-          // this.enemyboard.ships.forEach(ship => ship.spots.forEach(spot => {
-          //     if (spot.x == computerShot.x && spot.y == computerShot.y) {
-          //         ship.applyHit({x: computerShot.x, y: computerShot.y});
-          //         if (ship.sunk) {
-          //           this.enemyboard.sunkenShips++;
-          //           console.log("PC sunk your ship!");
-          //           console.log(ship);
-          //           if (this.enemyboard.sunkenShips >= 5) {
-          //             console.log(this.enemyboard.sunkenShips);
-          //             // let gameOverDiv = document.getElementById('game-over')
-          //             gameOverDiv.innerHTML = 'You Lose!';
-          //           }
-          //         }
-          //         break;//STOP this loop
-          //     }}
-          //   )
-          // )
-
 
         } else {
           computerTarget.classList.toggle('white');
           this.enemyboard.lastShotSucceeded = false;
         }
         this.enemyboard.board[computerShot.x][computerShot.y] = 2;
-        // gameOverDiv.innerHTML = 'Take your shot!';
-        // let board = document.getElementsByClassName('board')[0];
-        // board.style.pointerEvents = 'all'
-
   }
 
+  educatedShot(target) {
+    let guessCount = 1;
+    let computerShot = generateEducatedCoords(target.enemyboard.lastShotXY);
+    while (target.enemyboard.board[computerShot.x][computerShot.y] == 2 && guessCount < 5) {
+      computerShot = generateEducatedCoords(target.enemyboard.lastShotXY);
+      guessCount++;
+    }
+    // This guessCount avoids an infinite loop if no adjacent spots are valid.
+    if (guessCount == 5) {
+      computerShot = target.enemyboard.randomShot(target);
+    }
 
+    return computerShot;
+  }
+
+  randomShot(target) {
+    let computerShot = generateRandomCoords();
+    while (target.enemyboard.board[computerShot.x][computerShot.y] == 2) {
+      computerShot = generateRandomCoords();
+    }
+    return computerShot;
+  }
     // CPU AI LOGIC:
 
     // generate new shot with random coordinates,
