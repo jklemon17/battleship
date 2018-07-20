@@ -7,20 +7,18 @@ body {
   background-image: url("./assets/Battleships.jpg");
   background-size: 100vw 100vh;
   background-attachment: fixed;
-  /* background-color: darkgrey; */
 }
 
 .square {
   height: 3vw;
   width: 3vw;
-  background-color: aqua;
+  background-color: rgba(0, 255, 255, .8);
   border: 0.1vw solid black;
   display: inline-block;
   float: left;
 }
 
 .first {
-  /* float: left; */
   clear: left;
 }
 
@@ -30,7 +28,7 @@ body {
 }
 
 .player-ship {
-  background-color: darkgrey;
+  background-color: grey;
 }
 
 .red {
@@ -60,7 +58,6 @@ body {
   margin-left: 36vw;
   margin-top: 4vw;
   padding-top: 2.5vw;
-  /* padding-bottom: -2.5vw; */
   text-align: center;
 }
 
@@ -95,35 +92,38 @@ body {
   }
 
   #top-board {
-    margin-top: 18vw;
+    margin-top: 2vw;
+  }
+
+  #bottom-board {
+    margin-bottom: 2vw;
   }
 
   #game-over {
-    width: 45vw;
+    display: inline-block;
+    width: 40vw;
     height: 8vw;
-    font-size: 2vw;
+    font-size: 4vw;
     border: 0.5vw solid white;
     float: none;
     clear: none;
-    margin-left: 27vw;
-    margin-top: 4.5vw;
-    margin-bottom: -2vw;
+    margin-left: 13vw;
+    margin-top: 3vw;
+    margin-bottom: -6vw;
     padding-top: 2.5vw;
-    /* padding-bottom: -2.5vw; */
+    margin-right: 2vw;
   }
 
   #reset {
+    display: inline-block;
     width: 30vw;
-    height: 10vw;
-    border: 0.6vw solid white;
+    height: 11.5vw;
+    border: 0.5vw solid white;
     float: none;
     clear: none;
     font-size: 5vw;
-    /* transform: translate(,-1vw); */
-    position: absolute;
-    top: 2.5vw;
-    left: 34vw;
-    margin-left: 1vw;
+    margin: 0;
+    transform: translateY(1.5vw);
   }
 
 }
@@ -154,7 +154,6 @@ body {
     margin-top: 45px;
     margin-bottom: -20px;
     padding-top: 25px;
-    /* padding-bottom: -25px; */
   }
 
   #reset {
@@ -166,7 +165,6 @@ body {
     font-size: 30px;
     transform: translateY(-10px);
     margin-left: 10vw;
-    /* margin-right: 0; */
   }
 }
 
@@ -181,17 +179,8 @@ body {
   .board {
     margin-top: 50px;
     margin-left: 40vw;
-    /* margin: auto; */
     border: 6px solid white;
   }
-
-  /* #top-board {
-    margin-bottom: 200px;
-  }
-
-  #bottom-board {
-    transform: translateY(200px);
-  } */
 
   #game-over {
     display: inline-block;
