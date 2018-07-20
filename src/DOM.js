@@ -9,6 +9,8 @@ function buildBoard(ownTerritory, enemyTerritory=null) {
   boardDiv.classList = 'board';
   if (enemyTerritory !== null) {
     boardDiv.id = "top-board";
+  } else {
+    boardDiv.id = "bottom-board";
   }
   document.body.appendChild(boardDiv);
   // gameBoard.board.forEach(
