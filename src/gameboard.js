@@ -51,7 +51,7 @@ class Gameboard {
     }
 
     // NOTE ship lengths of 5,4,4,3,1  need to be -1
-    let stockShips = [4,3,2,1,0];
+    let stockShips = [4,3,3,2,1];
     stockShips.forEach(length => {
       let happened;
       do {
@@ -70,6 +70,7 @@ class Gameboard {
 
     this.lastShotSucceeded = false;
     this.lastShotXY = null;
+    this.shotsSinceLastHit = 0;
 
   }
 
@@ -78,6 +79,7 @@ class Gameboard {
     // gameOverDiv.innerHTML = 'Computer Firing...';
     let boardTarget = this.gameboard.board[this.x][this.y];
     let gameOverDiv = document.getElementById('game-over');
+    gameOverDiv.innerHTML = '';
     let board = document.getElementsByClassName('board')[0];
 
     loop1:
@@ -122,7 +124,7 @@ class Gameboard {
   }
 
   computerAttack() {
-    this.removeEventListener('click', this.enemyboard.computerAttack);
+    // this.removeEventListener('click', this.enemyboard.computerAttack);
     let board = document.getElementsByClassName('board')[0];
 
         let computerShot;
@@ -139,6 +141,7 @@ class Gameboard {
         if (this.enemyboard.board[computerShot.x][computerShot.y] == 1) {
           computerTarget.classList.toggle('red');
           this.enemyboard.lastShotSucceeded = true;
+          this.enemyboard.shotsSinceLastHit = 0;
           this.enemyboard.lastShotXY = { x: computerShot.x, y: computerShot.y };
 
           // apply hit to Player's javascript Ship object:
@@ -163,7 +166,10 @@ class Gameboard {
 
         } else {
           computerTarget.classList.toggle('white');
-          this.enemyboard.lastShotSucceeded = false;
+          this.enemyboard.shotsSinceLastHit++;
+          if (this.enemyboard.shotsSinceLastHit >= 4) {
+            this.enemyboard.lastShotSucceeded = false;
+          }
         }
         this.enemyboard.board[computerShot.x][computerShot.y] = 2;
   }
