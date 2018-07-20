@@ -7,6 +7,9 @@ function buildBoard(ownTerritory, enemyTerritory=null) {
 
   let boardDiv = document.createElement('div');
   boardDiv.classList = 'board';
+  if (enemyTerritory !== null) {
+    boardDiv.id = "top-board";
+  }
   document.body.appendChild(boardDiv);
   // gameBoard.board.forEach(
   //
@@ -50,6 +53,17 @@ function initialSetup() {
   let gameOverDiv = document.createElement('div');
   gameOverDiv.id = 'game-over';
   document.body.appendChild(gameOverDiv);
+
+
+  let resetButton = document.createElement('input');
+  resetButton.type = "button";
+  // resetButton.onclick = window.location.reload;
+  resetButton.id = 'reset';
+  resetButton.value = "New Game";
+  resetButton.addEventListener('click', () => window.location.reload());
+  document.body.appendChild(resetButton);
+
+
   // Player's perspective:
   buildBoard(PlayerTerritory);
   // buildBoard('NPC');

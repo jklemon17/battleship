@@ -3,11 +3,17 @@
   padding: 0;
 }
 
+body {
+  background-image: url("./assets/Battleships.jpg");
+  background-size: 100vw 100vh;
+  background-color: darkgrey;
+}
+
 .square {
-  height: 25px;
-  width: 25px;
+  height: 3vw;
+  width: 3vw;
   background-color: aqua;
-  border: 1px solid black;
+  border: 0.1vw solid black;
   display: inline-block;
   float: left;
 }
@@ -34,14 +40,128 @@
   display: inline-block;
   float: left;
   clear: both;
-  margin: 40px 35% 20px;
+  margin-top: 5vw;
+  margin-left: 32vw;
+  border: 0.6vw solid white;
 }
 
 #game-over {
   display: inline-block;
-  width: 100vw;
+  width: 25vw;
+  height: 5vw;
+  font-size: 2vw;
+  font-weight: bold;
+  color: white;
+  background-color: green;
+  border: 0.3vw solid white;
   float: left;
-  clear: both;
-  /* margin: 0 35%; */
+  clear: left;
+  margin-left: 36vw;
+  margin-top: 4vw;
+  padding-top: 2.5vw;
+  padding-bottom: -2.5vw;
   text-align: center;
+}
+
+#reset {
+  display: inline-block;
+  width: 20vw;
+  height: 10vw;
+  color: white;
+  background-color: green;
+  border: 0.6vw solid white;
+  font-size: 3vw;
+  font-weight: bold;
+  float: right;
+  margin-top: 2vw;
+  margin-right: 10vw;
+}
+
+
+@media only screen and (min-width: 1000px) {
+  .square {
+    height: 30px;
+    width: 30px;
+    border: 1px solid black;
+  }
+
+  .board {
+    margin-top: 50px;
+    margin-left: 32vw;
+    border: 6px solid white;
+  }
+
+  #game-over {
+    width: 250px;
+    height: 50px;
+    font-size: 20px;
+    border: 3px solid white;
+    float: none;
+    clear: none;
+    margin-left: 36vw;
+    margin-top: 45px;
+    margin-bottom: -20px;
+    padding-top: 25px;
+    padding-bottom: -25px;
+  }
+
+  #reset {
+    width: 200px;
+    height: 100px;
+    border: 6px solid white;
+    float: none;
+    clear: none;
+    font-size: 30px;
+    transform: translateY(-10px);
+    margin-left: 10vw;
+  }
+
+}
+
+
+@media only screen and (max-width: 600px) {
+  .square {
+    height: 7vw;
+    width: 7vw;
+    border: 0.1vw solid black;
+  }
+
+  .board {
+    margin-top: 5vw;
+    margin-left: 13.5vw;
+    border: 0.6vw solid white;
+  }
+
+  #top-board {
+    margin-top: 18vw;
+  }
+
+  #game-over {
+    width: 45vw;
+    height: 8vw;
+    font-size: 2vw;
+    border: 0.5vw solid white;
+    float: none;
+    clear: none;
+    margin-left: 27vw;
+    margin-top: 4.5vw;
+    margin-bottom: -2vw;
+    padding-top: 2.5vw;
+    padding-bottom: -2.5vw;
+  }
+
+  #reset {
+    width: 30vw;
+    height: 10vw;
+    border: 0.6vw solid white;
+    float: none;
+    clear: none;
+    font-size: 5vw;
+    /* transform: translate(,-1vw); */
+    position: absolute;
+    top: 2.5vw;
+    left: 34vw;
+    margin-left: 1vw;
+  }
+
 }

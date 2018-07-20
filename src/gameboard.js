@@ -124,7 +124,7 @@ class Gameboard {
   }
 
   computerAttack() {
-    // this.removeEventListener('click', this.enemyboard.computerAttack);
+    this.removeEventListener('click', this.enemyboard.computerAttack);
     let board = document.getElementsByClassName('board')[0];
 
         let computerShot;
