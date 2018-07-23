@@ -47,8 +47,8 @@ function buildBoard(ownTerritory, enemyTerritory=null) {
 }
 
 function initialSetup() {
-  let NPCterritory = new Gameboard()
-  let PlayerTerritory = new Gameboard()
+  let NPCterritory = new Gameboard();
+  let PlayerTerritory = new Gameboard();
   // Computer's perspective:
   buildBoard(NPCterritory, PlayerTerritory);
 
