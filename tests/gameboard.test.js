@@ -22,3 +22,29 @@ test ('creates a valid gameboard', () => {
   expect(testGameboard.lastShotXY).toBe(null);
   expect(testGameboard.shotsSinceLastHit).toBe(0);
 });
+
+test ('educated shot generates valid coordinates', () => {
+
+  testGameboard.board = [
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,2,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1]];
+
+  let target = {enemyboard: testGameboard};
+  testGameboard.lastShotSucceeded = true;
+  testGameboard.lastShotXY = { x:1, y:1 };
+
+  let surroundedSpots = [{ x: 0, y: 1 },
+                         { x: 1, y: 0 },
+                         { x: 1, y: 2 },
+                         { x: 2, y: 1 }];
+  let nextTarget = testGameboard.educatedShot(target);
+  expect(surroundedSpots).toContainEqual(nextTarget);
+});

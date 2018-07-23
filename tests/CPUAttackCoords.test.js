@@ -1,18 +1,5 @@
 import { generateRandomCoords, generateEducatedCoords } from '../src/CPUAttackCoords';
 
-
-// let gameOverDiv = document.createElement('div');
-// gameOverDiv.id = 'game-over';
-// document.body.appendChild(gameOverDiv);
-//
-// let boardDiv = document.createElement('div');
-// boardDiv.classList = 'board';
-// document.body.appendChild(boardDiv);
-//
-// let territory = {};
-// territory.sunkenShips = 5;
-
-
 test ('generateRandomCoords generates valid random coordinates', () => {
   for (let i = 0; i<100; i++) {
     let coords = generateRandomCoords();
