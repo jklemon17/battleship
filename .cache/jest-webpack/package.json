@@ -18,10 +18,16 @@
     "url": "https://github.com/jklemon17/battleship/issues"
   },
   "homepage": "https://github.com/jklemon17/battleship#readme",
+  "jest": {
+    "testRegex": "/tests/.*\\.(js|jsx)$"
+  },
   "devDependencies": {
     "jest": "^23.4.1",
     "jest-webpack": "^0.5.0",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.0.8"
+  },
+  "dependencies": {
+    "dragula": "^3.7.2"
   }
 }

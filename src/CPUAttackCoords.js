@@ -1,10 +1,8 @@
 function generateRandomCoords() {
   let randomCoords = { x: -5, y: -5 }
 
-  while (randomCoords.x < 0 || randomCoords.x > 9 || randomCoords.y < 0 || randomCoords.y > 9) {
-    randomCoords.x = Math.floor(Math.random() * 10);
-    randomCoords.y = Math.floor(Math.random() * 10);
-  }
+  randomCoords.x = Math.floor(Math.random() * 10);
+  randomCoords.y = Math.floor(Math.random() * 10);
 
   return randomCoords;
 }

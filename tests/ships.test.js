@@ -1,4 +1,4 @@
-import { Ship } from './src/shipClass';
+import { Ship } from '../src/shipClass';
 
 test ('creates a ship', () => {
   let shipTest = new Ship("shipTest", {x: 0, y: 0}, {x: 0, y: 4});
@@ -13,7 +13,7 @@ test ('applies hits to a ship', () => {
   expect(shipTest.spots[0].hit).toBe(true);
   expect(shipTest.spots[1].hit).toBe(false);
   expect(shipTest.sunk).toBe(false);
-  
+
   shipTest.applyHit({x:0, y:1})
   shipTest.applyHit({x:0, y:2})
   shipTest.applyHit({x:0, y:3})
