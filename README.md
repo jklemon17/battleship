@@ -1,7 +1,8 @@
-# battleship
 JavaScript Battleship game
 
-To run the game:
+Play in your browser here: http://jklemon17.github.io/battleship
+
+To run the game locally:
 
 Clone to your local machine.
 
