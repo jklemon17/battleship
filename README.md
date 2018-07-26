@@ -1,4 +1,4 @@
-JavaScript Battleship game
+## JavaScript Battleship game
 
 Play in your browser here: http://jklemon17.github.io/battleship
 
@@ -15,3 +15,8 @@ To play:
   * Click a spot on the top board where you think the computer's ships might be.
   * The computer will immediately fire back, which will show on the bottom board.
   * Repeat until someone wins.
+  
+## Authors
+
+* **Kyle Lemon** - [jklemon17](https://github.com/jklemon17)
+* **Paul Rail** - [PolarisTLX](https://github.com/PolarisTLX)
